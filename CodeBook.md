@@ -81,7 +81,7 @@ trainData_act <- read.table("./UCI HAR Dataset/train/y_train.txt",header=FALSE)
 trainData_sub <- read.table("./UCI HAR Dataset/train/subject_train.txt",header=FALSE)
 
 
-v) (instruction#3) Descriptive activity names to name the activities in the data set:
+v) [instruction#3] Descriptive activity names to name the activities in the data set:
 
 The class labels linked with their activity names are loaded from the activity_labels.txt file. The numbers of the testData_act and trainData_act data frames are replaced by those names:
 
@@ -90,7 +90,7 @@ testData_act$V1 <- factor(testData_act$V1,levels=activities$V1,labels=activities
 trainData_act$V1 <- factor(trainData_act$V1,levels=activities$V1,labels=activities$V2)
 
 
-vi) (instruction#4) Appropriately labels the data set with descriptive activity names:
+vi) [instruction#4] Appropriately labels the data set with descriptive activity names:
 
 Each data frame of the data set is labeled - using the features.txt - with the information about the variables used on the feature vector. The Activity and Subject columns are also named properly before merging them to the test and train dataset.
 
@@ -103,7 +103,7 @@ colnames(testData_sub)<-c("Subject")
 colnames(trainData_sub)<-c("Subject")
 
 
-vii) (instruction#1) Merge test and training sets into one data set, including the activities:
+vii) [instruction#1] Merge test and training sets into one data set, including the activities:
 
 The Activity and Subject columns are appended to the test and train data frames, and then are both merged in the bigData data frame.
 
@@ -114,7 +114,7 @@ trainData<-cbind(trainData,trainData_sub)
 bigData<-rbind(testData,trainData)
 
 
-viii) (instruction#2) Extract only the measurements on the mean and standard deviation for each measurement:
+viii) [instruction#2] Extract only the measurements on the mean and standard deviation for each measurement:
 
 mean() and sd() are used against bigData via sapply() to extract the requested measurements.
 
@@ -124,9 +124,9 @@ bigData_sd<-sapply(bigData,sd,na.rm=TRUE)
 *Note, you will get message: "A warning is returned for the Activity column because it's not numeric". This does not impact the calcucation of the rest and NA is stored in the new data frames instead, since mean and sd are not applicable in this case. The same applies for Subject where we're not interested about the mean and sd, but since it's numeric already there is no warning.
 
 
-ix) (instruction#5) Creates a second, independent tidy data set with the average of each variable for each activity and each subject:
+ix) [instruction#5] Creates a second, independent tidy data set with the average of each variable for each activity and each subject:
 
-Finaly the desired result is produced.  A tidy data table is created with the average of each measurement per activity/subject combination. The new dataset is saved in a file named: tidy.csv .
+Ultimately, a tidy data table is created with the average of each measurement per activity/subject combination. The new dataset is saved in a file named: tidy.csv .
 
 DT <- data.table(bigData)
 tidy<-DT[,lapply(.SD,mean),by="Activity,Subject"]
